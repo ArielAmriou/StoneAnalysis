@@ -10,6 +10,11 @@ CXX = clang++
 MAIN = src/Main.cpp
 
 SRC = 	$(addprefix src/, 						\
+			Wav.cpp								\
+			Riff.cpp							\
+			Fmt.cpp								\
+			Waves.cpp							\
+			DFT.cpp								\
     	)
 
 PATH_UNI = 	$(addprefix tests/, 				\
