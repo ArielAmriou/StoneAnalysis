@@ -10,6 +10,7 @@ CXX = clang++
 MAIN = src/Main.cpp
 
 SRC = 	$(addprefix src/, 						\
+			StoneAnalysis.cpp 					\
 			Wav.cpp								\
 			Riff.cpp							\
 			Fmt.cpp								\

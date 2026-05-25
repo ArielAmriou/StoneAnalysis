@@ -6,19 +6,29 @@
 */
 
 #include <iostream>
-
+#include "Exception.hpp"
+#include "StoneAnalysis.hpp"
 #include "Wav.hpp"
 
 int main(int ac, char **av)
 {
-    if (ac != 2)
-        return 84;
+    std::queue<std::string> args(std::deque<std::string>(av + 1, av + ac));
+    try {
+        StoneAnalysis::StoneAnalysis func;
+        func.run(args);
+    } catch (StoneAnalysis::StoneAnalysisException &e) {
+        std::cerr << e.what() << std::endl;
+        return StoneAnalysis::EPIERROR;
+    }
+    return StoneAnalysis::EPISUCCESS;
+    // if (ac != 2)
+    //     return 84;
 
-    StoneAnalysis::Wav wav(av[1]);
-    std::cout << wav << std::endl;
-    auto a = wav.analize();
-    auto size = a.size();
-    int i = 440 * size / 48000;
-    std::cout << a[i].imag() << " : " <<  a[i].real() << std::endl;
-    return 0;
+    // StoneAnalysis::Wav wav(av[1]);
+    // std::cout << wav << std::endl;
+    // auto a = wav.analize();
+    // auto size = a.size();
+    // int i = 440 * size / 48000;
+    // std::cout << a[i].imag() << " : " <<  a[i].real() << std::endl;
+    // return 0;
 }
