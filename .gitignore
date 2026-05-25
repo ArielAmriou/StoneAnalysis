@@ -1,3 +1,4 @@
 sounds
 *.o
 stone_analysis
+tests_run*
