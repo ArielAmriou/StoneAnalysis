@@ -5,8 +5,12 @@
 ** StoneAnalysis
 */
 
+#include <fstream>
+#include <iostream>
+#include <iomanip>
 #include "StoneAnalysis.hpp"
 #include "Exception.hpp"
+#include "Wav.hpp"
 
 namespace StoneAnalysis {
     StoneAnalysis::StoneAnalysis()
@@ -21,8 +25,10 @@ namespace StoneAnalysis {
 
     void StoneAnalysis::run(std::queue<std::string> args)
     {
-        if (args.empty())
+        if (args.empty()) {
+            help();
             throw WrongArgsException();
+        }
         if (args.front() == FLAG_HELP)
             return help();
         try {
@@ -36,24 +42,48 @@ namespace StoneAnalysis {
         }
     }
 
-    void StoneAnalysis::analize(std::queue<std::string>)
+    void StoneAnalysis::analize(std::queue<std::string> args)
     {
-
+        if (args.size() != NB_ARGS_A)
+            throw WrongArgsException();
+        Wav wav(args.front());
+        args.pop();
+        std::size_t n;
+        std::istringstream stream(args.front());
+        stream >> n;
+        if (stream.fail() || !stream.eof())
+            throw WrongArgsException();
+        std::cout << wav << std::endl;
+        auto a = wav.analize();
+        auto size = a.size();
+        int i = 440 * size / 48000;
+        std::cout << a[i].imag() << " : " <<  a[i].real() << std::endl;
     }
 
-    void StoneAnalysis::cypher(std::queue<std::string>)
+    void StoneAnalysis::cypher(std::queue<std::string> args)
     {
-
+        if (args.size() != NB_ARGS_C)
+            throw WrongArgsException();
+        Wav wav(args.front());
+        args.pop();
+        std::string output = args.front();
+        args.pop();
+        std::string msg = args.front();
     }
 
-    void StoneAnalysis::decypher(std::queue<std::string>)
+    void StoneAnalysis::decypher(std::queue<std::string> args)
     {
-
+        if (args.size() != NB_ARGS_D)
+            throw WrongArgsException();
+        Wav wav(args.front());
     }
 
     void StoneAnalysis::help()
     {
+        std::ifstream file({std::string(HELP)});
 
+        if (file.is_open())
+            std::cout << file.rdbuf();
     }
 
     StoneAnalysis::Mode StoneAnalysis::getMode(std::string str)

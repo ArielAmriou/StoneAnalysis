@@ -28,6 +28,9 @@ namespace StoneAnalysis {
     constexpr int SKIP = -1;
     constexpr std::string_view HELP = "public/help.txt";
     constexpr std::string_view FLAG_HELP = "--help";
+    constexpr std::size_t NB_ARGS_A = 2;
+    constexpr std::size_t NB_ARGS_C = 3;
+    constexpr std::size_t NB_ARGS_D = 1;
 
     class StoneAnalysis {
         public:

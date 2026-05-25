@@ -26,6 +26,11 @@ namespace StoneAnalysis {
         public:
             WrongArgsException() : StoneAnalysisException("Wrongs Args.") {};
     };
+
+    class NoSuchFileException : public StoneAnalysisException {
+        public:
+            NoSuchFileException(std::string str) : StoneAnalysisException("No Such file: " + str + ".") {};
+    };
 };
 
 #endif
