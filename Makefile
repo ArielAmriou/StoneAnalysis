@@ -20,6 +20,7 @@ SRC = 	$(addprefix src/, 						\
 
 PATH_UNI = 	$(addprefix tests/, 				\
 				tests_parsing.cpp 				\
+				tests_analyze.cpp 				\
 			)
 
 OBJ = $(SRC:.cpp=.o) $(MAIN:.cpp=.o)
