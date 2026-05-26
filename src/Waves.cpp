@@ -11,7 +11,8 @@ namespace StoneAnalysis {
     Waves::Waves(std::ifstream &file)
     {
         file.read((char *)(&_header), sizeof(_header));
-        for (auto i = 0; i < _header.subChunkSize; ++i) {
+        std::size_t numSamples = _header.subChunkSize / sizeof(b2);
+        for (std::size_t i = 0; i < numSamples; ++i) {
             b2 sample;
             file.read((char *)(&sample), sizeof(sample));
             _data.push_back(sample);
