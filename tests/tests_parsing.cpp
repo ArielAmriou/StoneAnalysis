@@ -22,8 +22,7 @@ static void redirect_all_std()
 static const char *testMain(std::queue<std::string> args)
 {
     try {
-        StoneAnalysis::StoneAnalysis tmp;
-        tmp.run(args);
+        StoneAnalysis::StoneAnalysis tmp(args);
     } catch (StoneAnalysis::StoneAnalysisException &e) {
         std::string *tmp = new std::string(e.what());
         return tmp->c_str();

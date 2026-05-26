@@ -13,69 +13,80 @@
 #include "Wav.hpp"
 
 namespace StoneAnalysis {
-    StoneAnalysis::StoneAnalysis()
+    StoneAnalysis::StoneAnalysis(std::queue<std::string> args)
     {
-        _modes[Mode::Analyze] = [this](std::queue<std::string> args)
-            {analize(args);};
-        _modes[Mode::Cypher] = [this](std::queue<std::string> args)
-            {cypher(args);};
-        _modes[Mode::Decypher] = [this](std::queue<std::string> args)
-            {decypher(args);};
-    }
-
-    void StoneAnalysis::run(std::queue<std::string> args)
-    {
+        initModes();
         if (args.empty()) {
             help();
             throw WrongArgsException();
         }
         if (args.front() == FLAG_HELP)
-            return help();
-        try {
-            auto find = _modes.find(getMode(args.front()));
-            if (find == _modes.end())
-                throw WrongArgsException();
-            args.pop();
-            find->second(args);
-        } catch (StoneAnalysisException &e) {
-            throw e;
+            help();
+        else {
+            try {
+                _mode = getMode(args.front());
+                auto find = _modes.find(_mode);
+                if (find == _modes.end())
+                    throw WrongArgsException();
+                args.pop();
+                find->second.parser(args);
+            } catch (StoneAnalysisException &e) {
+                throw e;
+            }
         }
     }
 
-    void StoneAnalysis::analize(std::queue<std::string> args)
+    void StoneAnalysis::initModes()
+    {
+        _modes[Mode::Analyze] = {
+            [this](std::queue<std::string> args) {analizeParser(args);},
+            [this]() {analize();}
+        };
+        _modes[Mode::Cypher] = {
+            [this](std::queue<std::string> args) {cypherParser(args);},
+            [this]() {cypher();}
+        };
+        _modes[Mode::Decypher] = {
+            [this](std::queue<std::string> args) {decypherParser(args);},
+            [this]() {decypher();}
+        };
+    }
+
+    void StoneAnalysis::run()
+    {
+        auto find = _modes.find(_mode);
+        if (find != _modes.end())
+            find->second.methode();
+    }
+
+    void StoneAnalysis::analizeParser(std::queue<std::string> args)
     {
         if (args.size() != NB_ARGS_A)
             throw WrongArgsException();
-        Wav wav(args.front());
+        _in = Wav(args.front());
         args.pop();
-        std::size_t n;
         std::istringstream stream(args.front());
-        stream >> n;
+        stream >> _n;
         if (stream.fail() || !stream.eof())
             throw WrongArgsException();
-        std::cout << wav << std::endl;
-        auto a = wav.analize();
-        auto size = a.size();
-        int i = 440 * size / 48000;
-        std::cout << a[i].imag() << " : " <<  a[i].real() << std::endl;
     }
 
-    void StoneAnalysis::cypher(std::queue<std::string> args)
+    void StoneAnalysis::cypherParser(std::queue<std::string> args)
     {
         if (args.size() != NB_ARGS_C)
             throw WrongArgsException();
-        Wav wav(args.front());
+        _in = Wav(args.front());
         args.pop();
-        std::string output = args.front();
+        _out = args.front();
         args.pop();
-        std::string msg = args.front();
+        _msg = args.front();
     }
 
-    void StoneAnalysis::decypher(std::queue<std::string> args)
+    void StoneAnalysis::decypherParser(std::queue<std::string> args)
     {
         if (args.size() != NB_ARGS_D)
             throw WrongArgsException();
-        Wav wav(args.front());
+        _in = Wav(args.front());
     }
 
     void StoneAnalysis::help()
@@ -93,6 +104,29 @@ namespace StoneAnalysis {
                 return iter->first;
         }
         throw WrongArgsException();
+    }
+
+    void StoneAnalysis::analize()
+    {
+        if (!_in)
+            throw NotInitializeException();
+        std::cout << *_in << std::endl;
+        auto a = _in->analize();
+        auto size = a.size();
+        int i = 440 * size / 48000;
+        std::cout << a[i].imag() << " : " <<  a[i].real() << std::endl;
+    }
+
+    void StoneAnalysis::cypher()
+    {
+        if (!_in)
+            throw NotInitializeException();
+    }
+
+    void StoneAnalysis::decypher()
+    {
+        if (!_in)
+            throw NotInitializeException();
     }
 
     const std::unordered_map<StoneAnalysis::Mode,

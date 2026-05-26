@@ -31,6 +31,11 @@ namespace StoneAnalysis {
         public:
             NoSuchFileException(std::string str) : StoneAnalysisException("No Such file: " + str + ".") {};
     };
+
+    class NotInitializeException : public StoneAnalysisException {
+        public:
+            NotInitializeException() : StoneAnalysisException("Not Initialize") {};
+    };
 };
 
 #endif

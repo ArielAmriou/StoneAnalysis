@@ -10,7 +10,7 @@
 
 #include <fstream>
 
-#include "StoneAnalysis.hpp"
+#include "Utils.hpp"
 
 namespace StoneAnalysis {
     struct fmtSubChunkData {

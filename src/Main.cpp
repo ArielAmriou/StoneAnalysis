@@ -14,8 +14,8 @@ int main(int ac, char **av)
 {
     std::queue<std::string> args(std::deque<std::string>(av + 1, av + ac));
     try {
-        StoneAnalysis::StoneAnalysis func;
-        func.run(args);
+        StoneAnalysis::StoneAnalysis func(args);
+        func.run();
     } catch (StoneAnalysis::StoneAnalysisException &e) {
         std::cerr << e.what() << std::endl;
         return StoneAnalysis::EPIERROR;

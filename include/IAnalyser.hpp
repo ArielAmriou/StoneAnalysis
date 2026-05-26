@@ -11,7 +11,7 @@
 #include <vector>
 #include <complex>
 
-#include "StoneAnalysis.hpp"
+#include "Utils.hpp"
 
 namespace StoneAnalysis {
 
