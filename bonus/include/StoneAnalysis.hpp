@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2026
+** bonus
+** File description:
+** StoneAnalysis
+*/
+
 #ifndef STONEANALYSIS_HPP
     #define STONEANALYSIS_HPP
 
@@ -9,6 +16,7 @@
     #include "../include/Wav.hpp"
     #include "UtilsSfml.hpp"
     #include "WaveForm.hpp"
+    #include "FrequencySpectrum.hpp"
 
 namespace StoneAnalysis {
     class StoneAnalysis
@@ -30,6 +38,7 @@ namespace StoneAnalysis {
             std::map<double, std::size_t> _dists;
             std::vector<std::complex<double>> _complex;
             WaveForm _waveForm;
+            FrequencySpectrum _fs;
     };
 };
 

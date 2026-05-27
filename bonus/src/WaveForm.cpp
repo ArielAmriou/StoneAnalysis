@@ -38,9 +38,9 @@ namespace StoneAnalysis{
 
     void WaveForm::drawBox(sf::RenderWindow &win)
     {
-        _rec.setSize({WINDOW_SIZE_X, BOX_HALF_H * 2 + 80.0f});
+        _rec.setSize({WINDOW_SIZE_X, BOX_HALF_H * 2 + BOX_TITLE_SIZE * 2});
         _rec.setFillColor(LIGHTGREY);
-        _rec.setPosition(0, BOX_TOP - 40.0f);
+        _rec.setPosition(0, BOX_TOP - BOX_TITLE_SIZE);
         win.draw(_rec);
         _rec.setSize({BOX_WIDTH, BOX_HALF_H * 2});
         _rec.setFillColor(sf::Color::White);
@@ -52,7 +52,7 @@ namespace StoneAnalysis{
         sf::FloatRect rc = _text.getLocalBounds();
         _text.setOrigin(rc.left + rc.width / 2, rc.top + rc.height / 2);
         _text.setFillColor(sf::Color::Black);
-        _text.setPosition(WINDOW_SIZE_X / 2, BOX_TOP - 20.0);
+        _text.setPosition(WINDOW_SIZE_X / 2, BOX_TOP - BOX_TITLE_SIZE / 2);
         win.draw(_text);
         _text.setStyle(sf::Text::Regular);
         _rec.setSize({BOX_WIDTH, 1.5f});
@@ -95,7 +95,7 @@ namespace StoneAnalysis{
             double ratio = (double)t / TIME_STEPS;
             double x = BOX_LEFT + ratio * BOX_WIDTH;
             double secs = ratio * _duration;
-            _rec.setSize({1.5f, TICK_SIZE});
+            _rec.setSize({1.5, TICK_SIZE});
             _rec.setFillColor(sf::Color(80, 80, 80));
             _rec.setPosition(x, BOX_BOTTOM);
             win.draw(_rec);

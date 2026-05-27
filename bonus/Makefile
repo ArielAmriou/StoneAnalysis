@@ -20,6 +20,7 @@ SRC = 	$(addprefix ../src/, 					\
 BONUS_SRC =	$(addprefix src/, 					\
 			StoneAnalysis.cpp					\
 			WaveForm.cpp 						\
+			FrequencySpectrum.cpp				\
     	)
 
 OBJ = $(SRC:.cpp=.o) $(BONUS_SRC:.cpp=.o) $(MAIN:.cpp=.o)

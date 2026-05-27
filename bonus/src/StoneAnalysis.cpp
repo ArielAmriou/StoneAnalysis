@@ -16,7 +16,8 @@ namespace StoneAnalysis {
         _view(sf::FloatRect(0.0, 0.0, WINDOW_SIZE_X, WINDOW_SIZE_Y)),
         _font(loadFromFile("public/Font.ttf")),
         _wav("../tests/testSounds/complex.wav"),
-        _waveForm(_font)
+        _waveForm(_font),
+        _fs(_font)
     {
         _window.setFramerateLimit(FPS);
         _window.setView(_view);
@@ -40,6 +41,7 @@ namespace StoneAnalysis {
             _window.setView(_view);
             _window.draw(_rec);
             _waveForm.draw(_window);
+            _fs.draw(_window);
             _window.display();
         }
     }
@@ -70,10 +72,10 @@ namespace StoneAnalysis {
 
         if (windowRatio >= viewRatio) {
             size.x = viewRatio / windowRatio;
-            pos.x = (1.0f - size.x) / 2.0f;
+            pos.x = (1.0 - size.x) / 2.0;
         } else {
             size.y = windowRatio / viewRatio;
-            pos.y = (1.0f - size.y) / 2.0f;
+            pos.y = (1.0 - size.y) / 2.0;
         }
         _view.setViewport(sf::FloatRect(pos.x, pos.y, size.x, size.y));
         _window.setView(_view);
@@ -85,5 +87,6 @@ namespace StoneAnalysis {
             return;
         _waveForm.analize(*_wav);
         _complex = _wav->analize();
+        _fs.analize(_complex);
     }
 }
