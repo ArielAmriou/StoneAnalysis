@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <map>
 #include <iomanip>
+#include <algorithm>
 #include "StoneAnalysis.hpp"
 #include "Exception.hpp"
 #include "Wav.hpp"
@@ -82,6 +83,8 @@ namespace StoneAnalysis {
         _out = args.front();
         args.pop();
         _msg = args.front();
+        std::transform(_msg.begin(), _msg.end(), _msg.begin(),
+            [](unsigned char c) {return std::toupper(c);});
     }
 
     void StoneAnalysis::decypherParser(std::queue<std::string> args)
@@ -134,12 +137,33 @@ namespace StoneAnalysis {
     {
         if (!_in)
             throw NotInitializeException();
+        std::string msg = _msg + '\0';
+        std::vector<int> bits;
+        for (unsigned char c : msg)
+            for (int i = NB_BITS - 1; i >= 0; --i)
+                bits.push_back((c >> i) & 1);
+        if (bits.size() > _in->_waves._data.size())
+            throw MsgTooLongException();
+        for (std::size_t i = 0; i < bits.size(); ++i)
+            _in->_waves._data[i] = (_in->_waves._data[i] & ~1) | bits[i];
+        _in->save(_out);
     }
 
     void StoneAnalysis::decypher()
     {
         if (!_in)
             throw NotInitializeException();
+        std::string msg;
+        std::size_t i = 0;
+        while (i + NB_BITS <= _in->_waves._data.size()) {
+            unsigned char c = 0;
+            for (int b = NB_BITS - 1; b >= 0; --b)
+                c |= (_in->_waves._data[i++] & 1) << b;
+            if (c == '\0')
+                break;
+            msg += c;
+        }
+        std::cout << msg << "\n";
     }
 
     const std::unordered_map<StoneAnalysis::Mode,

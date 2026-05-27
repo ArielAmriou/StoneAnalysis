@@ -23,6 +23,7 @@ namespace StoneAnalysis {
         public:
             Wav(std::string path);
             std::vector<std::complex<double>> analize();
+            void save(std::string path);
 
             RIFF _RIFF;
             fmtSubChunk _fmt;

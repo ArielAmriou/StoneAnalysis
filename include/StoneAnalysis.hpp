@@ -25,6 +25,7 @@ namespace StoneAnalysis {
     constexpr std::size_t NB_ARGS_A = 2;
     constexpr std::size_t NB_ARGS_C = 3;
     constexpr std::size_t NB_ARGS_D = 1;
+    constexpr std::size_t NB_BITS = 8;
 
     class StoneAnalysis {
         public:

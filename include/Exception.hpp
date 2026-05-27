@@ -36,6 +36,11 @@ namespace StoneAnalysis {
         public:
             NotInitializeException() : StoneAnalysisException("Not Initialize") {};
     };
+
+    class MsgTooLongException : public StoneAnalysisException {
+        public:
+            MsgTooLongException() : StoneAnalysisException("Message too long") {};
+    };
 };
 
 #endif

@@ -25,6 +25,20 @@ namespace StoneAnalysis {
     {
         return std::make_unique<DFT>()->analize(_waves._data);
     };
+
+
+    void Wav::save(std::string path)
+    {
+        std::ofstream out(path, std::ios::binary);
+        if (out.fail())
+            throw NoSuchFileException(path);
+        SWAP(_RIFF._data.chunkSize);
+        out.write((char *)(&_RIFF._data), sizeof(_RIFF._data));
+        out.write((char *)(&_fmt._data), sizeof(_fmt._data));
+        out.write((char *)(&_waves._header), sizeof(_waves._header));
+        for (auto &sample : _waves._data)
+            out.write((char *)(&sample), sizeof(sample));
+    }
     
     std::ostream& operator<<(std::ostream& os, Wav& obj)
     {
