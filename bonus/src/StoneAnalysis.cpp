@@ -17,7 +17,8 @@ namespace StoneAnalysis {
         _font(loadFromFile("public/Font.ttf")),
         _wav("../tests/testSounds/complex.wav"),
         _waveForm(_font),
-        _fs(_font)
+        _fs(_font),
+        _spectrum(_font)
     {
         _window.setFramerateLimit(FPS);
         _window.setView(_view);
@@ -42,6 +43,7 @@ namespace StoneAnalysis {
             _window.draw(_rec);
             _waveForm.draw(_window);
             _fs.draw(_window);
+            _spectrum.draw(_window);
             _window.display();
         }
     }
@@ -88,5 +90,6 @@ namespace StoneAnalysis {
         _waveForm.analize(*_wav);
         _complex = _wav->analize();
         _fs.analize(_complex);
+        _spectrum.analize(_complex);
     }
 }

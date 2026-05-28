@@ -45,7 +45,7 @@ namespace StoneAnalysis {
             float x = BOX_LEFT + col;
             float normalizedMag = static_cast<float>(colMag[col] / _maxMag);
             float barH = normalizedMag * BOX_HALF_H * 2.0;
-            sf::Color color = sf::Color(70, 130, 255);
+            sf::Color color = LINE_COLOR;
             _spectrum.append({{x, BOX_BOTTOM}, color});
             _spectrum.append({{x, BOX_BOTTOM - barH}, color});
         }
@@ -61,7 +61,7 @@ namespace StoneAnalysis {
 
     void FrequencySpectrum::drawBox(sf::RenderWindow &win)
     {
-        _rec.setSize({WINDOW_SIZE_X / 2.0, BOX_HALF_H * 2 + BOX_TITLE_SIZE * 2});
+        _rec.setSize({BOX_RIGHT + BOX_SIDE_SIZE, BOX_HALF_H * 2 + BOX_TITLE_SIZE * 2});
         _rec.setFillColor(LIGHTGREY);
         _rec.setPosition(0, BOX_TOP - BOX_TITLE_SIZE);
         win.draw(_rec);
@@ -94,16 +94,12 @@ namespace StoneAnalysis {
                 _rec.setPosition(BOX_LEFT, y);
                 win.draw(_rec);
             }
-            _rec.setSize({TICK_SIZE, 1.5});
-            _rec.setFillColor(sf::Color(80, 80, 80));
-            _rec.setPosition(BOX_LEFT - TICK_SIZE, y);
-            win.draw(_rec);
             std::ostringstream ss;
             ss << std::fixed << std::setprecision(2) << mag;
             _text.setString(ss.str());
             sf::FloatRect rc = _text.getLocalBounds();
             _text.setOrigin(rc.left + rc.width, rc.top + rc.height / 2.0);
-            _text.setPosition(BOX_LEFT - TICK_SIZE - 4.0, y);
+            _text.setPosition(BOX_LEFT - 4.0, y);
             win.draw(_text);
         }
         _text.setOrigin(0, 0);
@@ -117,10 +113,6 @@ namespace StoneAnalysis {
             double x = hzToX(hz);
             if (x < BOX_LEFT || x > BOX_RIGHT)
                 continue;
-            _rec.setSize({1, TICK_SIZE});
-            _rec.setFillColor(sf::Color(80, 80, 80));
-            _rec.setPosition(x, BOX_BOTTOM);
-            win.draw(_rec);
             _rec.setSize({1.0, BOX_HALF_H * 2.0});
             _rec.setFillColor(sf::Color(220, 220, 220));
             _rec.setPosition(x, BOX_TOP);
@@ -129,7 +121,7 @@ namespace StoneAnalysis {
             _text.setString(label);
             sf::FloatRect rc = _text.getLocalBounds();
             _text.setOrigin(rc.left + rc.width / 2.0, rc.top);
-            _text.setPosition(x, BOX_BOTTOM + TICK_SIZE + 2.0);
+            _text.setPosition(x, BOX_BOTTOM + LEGEND_GAP);
             win.draw(_text);
         }
         _text.setOrigin(0, 0);

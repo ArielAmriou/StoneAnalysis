@@ -17,6 +17,7 @@
     #include "UtilsSfml.hpp"
     #include "WaveForm.hpp"
     #include "FrequencySpectrum.hpp"
+    #include "ComplexSpectrum.hpp"
 
 namespace StoneAnalysis {
     class StoneAnalysis
@@ -39,6 +40,7 @@ namespace StoneAnalysis {
             std::vector<std::complex<double>> _complex;
             WaveForm _waveForm;
             FrequencySpectrum _fs;
+            ComplexSpectrum _spectrum;
     };
 };
 

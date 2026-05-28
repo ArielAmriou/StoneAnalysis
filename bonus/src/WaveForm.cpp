@@ -24,7 +24,7 @@ namespace StoneAnalysis{
         for (std::size_t i = 0; i < samples.size(); ++i) {
             float x = BOX_LEFT + (double)i / samples.size() * BOX_WIDTH;
             float y = BOX_CENTER_Y - (samples[i] / 32768.0f) * BOX_HALF_H;
-            _waveform[i] = sf::Vertex({x, y}, sf::Color(70, 130, 255));
+            _waveform[i] = sf::Vertex({x, y}, LINE_COLOR);
         }
     }
 
@@ -73,16 +73,12 @@ namespace StoneAnalysis{
                 _rec.setPosition(BOX_LEFT, y);
                 win.draw(_rec);
             }
-            _rec.setSize({TICK_SIZE, 1.5});
-            _rec.setFillColor(sf::Color(80, 80, 80));
-            _rec.setPosition(BOX_LEFT - TICK_SIZE, y);
-            win.draw(_rec);
             std::ostringstream ss;
             ss << std::fixed << std::setprecision(1) << amp;
             _text.setString(ss.str());
             sf::FloatRect rc = _text.getLocalBounds();
             _text.setOrigin(rc.left + rc.width, rc.top + rc.height / 2);
-            _text.setPosition(BOX_LEFT - TICK_SIZE - 4.0, y);
+            _text.setPosition(BOX_LEFT - 4.0, y);
             win.draw(_text);
         }
     }
@@ -95,10 +91,6 @@ namespace StoneAnalysis{
             double ratio = (double)t / TIME_STEPS;
             double x = BOX_LEFT + ratio * BOX_WIDTH;
             double secs = ratio * _duration;
-            _rec.setSize({1.5, TICK_SIZE});
-            _rec.setFillColor(sf::Color(80, 80, 80));
-            _rec.setPosition(x, BOX_BOTTOM);
-            win.draw(_rec);
             if (t > 0 && t < TIME_STEPS) {
                 _rec.setSize({1.0f, BOX_HALF_H * 2});
                 _rec.setFillColor(sf::Color(220, 220, 220));
@@ -110,7 +102,7 @@ namespace StoneAnalysis{
             _text.setString(ss.str());
             sf::FloatRect rc = _text.getLocalBounds();
             _text.setOrigin(rc.left + rc.width / 2, rc.top);
-            _text.setPosition(x, BOX_BOTTOM + TICK_SIZE * 2);
+            _text.setPosition(x, BOX_BOTTOM + LEGEND_GAP);
             win.draw(_text);
         }
     }
