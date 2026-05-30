@@ -15,10 +15,11 @@ namespace StoneAnalysis {
         "StoneAnalysis", sf::Style::Close | sf::Style::Resize)),
         _view(sf::FloatRect(0.0, 0.0, WINDOW_SIZE_X, WINDOW_SIZE_Y)),
         _font(loadFromFile("public/Font.ttf")),
-        _wav("../tests/testSounds/complex.wav"),
+        _wav("../tests/testSounds/basic.wav"),
         _waveForm(_font),
         _fs(_font),
-        _spectrum(_font)
+        _spectrum(_font),
+        _loadingAnim({WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2}, _font)
     {
         _window.setFramerateLimit(FPS);
         _window.setView(_view);
@@ -41,9 +42,13 @@ namespace StoneAnalysis {
             _window.clear(sf::Color::Black);
             _window.setView(_view);
             _window.draw(_rec);
-            _waveForm.draw(_window);
-            _fs.draw(_window);
-            _spectrum.draw(_window);
+            if (!_loading) {
+                _waveForm.draw(_window);
+                _fs.draw(_window);
+                _spectrum.draw(_window);
+            } else {
+                _loadingAnim.draw(_window);
+            }
             _window.display();
         }
     }
@@ -55,7 +60,7 @@ namespace StoneAnalysis {
             handleResize(event);
             if (event.type == sf::Event::Closed ||
                     (event.type == sf::Event::KeyPressed
-                        && event.key.code == sf::Keyboard::Q))
+                        && event.key.code == sf::Keyboard::Escape))
                 _window.close();
         }
     }

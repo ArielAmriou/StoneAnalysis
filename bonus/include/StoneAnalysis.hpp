@@ -13,11 +13,14 @@
     #include <map>
     #include <vector>
     #include <complex>
+    #include <thread>
+    #include <atomic>
     #include "../include/Wav.hpp"
     #include "UtilsSfml.hpp"
     #include "WaveForm.hpp"
     #include "FrequencySpectrum.hpp"
     #include "ComplexSpectrum.hpp"
+    #include "Loading.hpp"
 
 namespace StoneAnalysis {
     class StoneAnalysis
@@ -38,9 +41,14 @@ namespace StoneAnalysis {
             std::optional<Wav> _wav;
             std::map<double, std::size_t> _dists;
             std::vector<std::complex<double>> _complex;
+
+            std::thread _thread;
+            std::atomic<bool> _loading = false;
+
             WaveForm _waveForm;
             FrequencySpectrum _fs;
             ComplexSpectrum _spectrum;
+            SfmlUtils::Loading _loadingAnim;
     };
 };
 

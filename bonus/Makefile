@@ -22,6 +22,7 @@ BONUS_SRC =	$(addprefix src/, 					\
 			WaveForm.cpp 						\
 			FrequencySpectrum.cpp				\
 			ComplexSpectrum.cpp					\
+			Loading.cpp 						\
     	)
 
 OBJ = $(SRC:.cpp=.o) $(BONUS_SRC:.cpp=.o) $(MAIN:.cpp=.o)
