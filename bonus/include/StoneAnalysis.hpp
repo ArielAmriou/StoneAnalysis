@@ -27,6 +27,8 @@ namespace StoneAnalysis {
     {
         public:
             StoneAnalysis();
+            ~StoneAnalysis();
+
             void run();
         private:
             sf::Font loadFromFile(std::string);
@@ -42,8 +44,8 @@ namespace StoneAnalysis {
             std::map<double, std::size_t> _dists;
             std::vector<std::complex<double>> _complex;
 
-            std::thread _thread;
             std::atomic<bool> _loading = false;
+            std::thread _thread;
 
             WaveForm _waveForm;
             FrequencySpectrum _fs;

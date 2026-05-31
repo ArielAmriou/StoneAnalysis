@@ -25,7 +25,17 @@ namespace StoneAnalysis {
         _window.setView(_view);
         _rec.setSize({WINDOW_SIZE_X, WINDOW_SIZE_Y});
         _rec.setFillColor(BACKGROUND_COLOR);
-        analyze();
+        _loading = true;
+        _thread = std::thread([this]() {
+            analyze();
+            _loading = false;
+        });
+    }
+
+    StoneAnalysis::~StoneAnalysis()
+    {
+        if (_thread.joinable())
+            _thread.join();
     }
 
     sf::Font StoneAnalysis::loadFromFile(std::string file)
@@ -62,6 +72,17 @@ namespace StoneAnalysis {
                     (event.type == sf::Event::KeyPressed
                         && event.key.code == sf::Keyboard::Escape))
                 _window.close();
+            if (event.type == sf::Event::KeyPressed
+                && event.key.code == sf::Keyboard::A
+                && !_loading) {
+                if (_thread.joinable())
+                    _thread.join();
+                _loading = true;
+                _thread = std::thread([this]() {
+                    analyze();
+                    _loading = false;
+                });
+            }
         }
     }
 
