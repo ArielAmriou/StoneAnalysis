@@ -23,11 +23,12 @@ BONUS_SRC =	$(addprefix src/, 					\
 			FrequencySpectrum.cpp				\
 			ComplexSpectrum.cpp					\
 			Loading.cpp 						\
+			AButton.cpp 						\
     	)
 
 OBJ = $(SRC:.cpp=.o) $(BONUS_SRC:.cpp=.o) $(MAIN:.cpp=.o)
 
-CXXFLAGS = -Wall -Wextra --std=c++20 -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -Wall -Wextra --std=c++20 -lsfml-graphics -lsfml-window -lsfml-system $(shell pkg-config --cflags --libs gtk+-3.0)
 
 CPPFLAGS = -iquote include -iquote ../include
 

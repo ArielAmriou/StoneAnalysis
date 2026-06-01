@@ -21,6 +21,7 @@
     #include "FrequencySpectrum.hpp"
     #include "ComplexSpectrum.hpp"
     #include "Loading.hpp"
+    #include "PresseButton.hpp"
 
 namespace StoneAnalysis {
     class StoneAnalysis
@@ -35,14 +36,21 @@ namespace StoneAnalysis {
             void event();
             void handleResize(sf::Event event);
             void analyze();
+            void openFileDialog();
+            void load();
+            void drawNoFile();
 
             sf::RenderWindow _window;
             sf::View _view;
             sf::Font _font;
+            sf::Text _text;
             sf::RectangleShape _rec;
+            sf::RectangleShape _toolBar;
+
             std::optional<Wav> _wav;
             std::map<double, std::size_t> _dists;
             std::vector<std::complex<double>> _complex;
+            std::optional<std::string> _file;
 
             std::atomic<bool> _loading = false;
             std::thread _thread;
@@ -51,6 +59,10 @@ namespace StoneAnalysis {
             FrequencySpectrum _fs;
             ComplexSpectrum _spectrum;
             SfmlUtils::Loading _loadingAnim;
+
+            SfmlUtils::PresseButton _loadButton;
+
+            constexpr static float TOOLBAR_HEIGHT = 50;
     };
 };
 

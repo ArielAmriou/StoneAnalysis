@@ -20,6 +20,7 @@ namespace StoneAnalysis {
     inline const sf::Color DARKBLUE = sf::Color(51, 75, 99);
     inline const sf::Color BACKGROUND_COLOR = sf::Color(50, 50, 75);
     inline const sf::Color LINE_COLOR = sf::Color(70, 130, 255);
+    constexpr int MSG_SIZE = 40;
     constexpr int TITLE_SIZE = 22;
     constexpr int CHAR_SIZE = 18;
     constexpr float BOX_TITLE_SIZE = 40.0;
