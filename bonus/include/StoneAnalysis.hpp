@@ -32,13 +32,13 @@ namespace StoneAnalysis {
 
             void run();
         private:
-            sf::Font loadFromFile(std::string);
             void event();
             void handleResize(sf::Event event);
             void analyze();
             void openFileDialog();
             void load();
             void drawNoFile();
+            void drawToolBar();
 
             sf::RenderWindow _window;
             sf::View _view;

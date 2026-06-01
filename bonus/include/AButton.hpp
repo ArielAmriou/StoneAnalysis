@@ -15,7 +15,8 @@ namespace SfmlUtils {
 
     enum class ButtonType {
         DropDown,
-        Presse
+        Presse,
+        State
     };
 
     class AButton {

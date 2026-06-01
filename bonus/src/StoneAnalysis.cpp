@@ -7,15 +7,17 @@
 
 #include <gtk/gtk.h>
 #include <sstream>
+#include <filesystem>
 #include <iomanip>
 #include "StoneAnalysis.hpp"
+#include "SfmlUtils.hpp"
 
 namespace StoneAnalysis {
     StoneAnalysis::StoneAnalysis() : _window(sf::RenderWindow(
         sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y, WINDOW_BITS),
         "StoneAnalysis", sf::Style::Close | sf::Style::Resize)),
         _view(sf::FloatRect(0.0, 0.0, WINDOW_SIZE_X, WINDOW_SIZE_Y)),
-        _font(loadFromFile("public/Font.ttf")),
+        _font(SfmlUtils::SfmlUtils::loadFromFile("public/Font.ttf")),
         _waveForm(_font),
         _fs(_font),
         _spectrum(_font),
@@ -30,6 +32,8 @@ namespace StoneAnalysis {
         _toolBar.setSize({WINDOW_SIZE_X, TOOLBAR_HEIGHT});
         _toolBar.setFillColor(LIGHTGREY);
         _text.setFont(_font);
+        // _file = "../tests/testSounds/basic.wav";
+        // load();
     }
 
     StoneAnalysis::~StoneAnalysis()
@@ -40,13 +44,6 @@ namespace StoneAnalysis {
             _thread.join();
     }
 
-    sf::Font StoneAnalysis::loadFromFile(std::string file)
-    {
-        sf::Font font;
-        font.loadFromFile(file);
-        return font;
-    }
-
     void StoneAnalysis::run()
     {
         while (_window.isOpen()) {
@@ -54,8 +51,7 @@ namespace StoneAnalysis {
             _window.clear(sf::Color::Black);
             _window.setView(_view);
             _window.draw(_rec);
-            _window.draw(_toolBar);
-            _loadButton.draw(_window);
+            drawToolBar();
             if (!_loading) {
                 if (_file) {
                     _waveForm.draw(_window);
@@ -77,6 +73,7 @@ namespace StoneAnalysis {
         sf::Vector2f mousePos = _window.mapPixelToCoords(sf::Mouse::getPosition(_window));
         while (_window.pollEvent(event)) {
             _loadButton.click(mousePos, event);
+            _waveForm.event(event, mousePos);
             handleResize(event);
             if (event.type == sf::Event::Closed ||
                     (event.type == sf::Event::KeyPressed
@@ -85,8 +82,10 @@ namespace StoneAnalysis {
             if ((event.type == sf::Event::KeyPressed
                 && event.key.code == sf::Keyboard::O)
                 || _loadButton.getPush()) {
+                auto before = _file;
                 openFileDialog();
-                load();
+                if (!before || (before && _file && *before != *_file))
+                    load();
                 _loadButton.reset();
             }
         }
@@ -119,7 +118,7 @@ namespace StoneAnalysis {
     {
         if (!_wav)
             return;
-        _waveForm.analize(*_wav);
+        _waveForm.analize(*_wav, *_file);
         _complex = _wav->analize();
         _fs.analize(_complex);
         _spectrum.analize(_complex);
@@ -127,7 +126,6 @@ namespace StoneAnalysis {
 
     void StoneAnalysis::openFileDialog()
     {
-        gtk_init(NULL, NULL);
         GtkWidget *dialog = gtk_file_chooser_dialog_new(
             "Select WAV file", NULL,
             GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -183,5 +181,22 @@ namespace StoneAnalysis {
         _text.setOrigin(rc.left + rc.width / 2.0, rc.top + rc.height / 2.0);
         _text.setPosition(WINDOW_SIZE_X / 2.0, WINDOW_SIZE_Y / 2.0 + MSG_SIZE);
         _window.draw(_text);
+    }
+
+    void StoneAnalysis::drawToolBar()
+    {
+        _window.draw(_toolBar);
+        _loadButton.draw(_window);
+        if (_file) {
+            _text.setStyle(sf::Text::Bold);
+            _text.setCharacterSize(TITLE_SIZE);
+            _text.setFillColor(sf::Color::Black);
+            std::filesystem::path file(*_file);
+            _text.setString(std::string(file.filename()));
+            sf::Rect rc = _text.getLocalBounds();
+            _text.setOrigin(rc.left + rc.width / 2.0, rc.top + rc.height / 2.0);
+            _text.setPosition(WINDOW_SIZE_X / 2.0, TOOLBAR_HEIGHT / 2.0);
+            _window.draw(_text);
+        }
     }
 }

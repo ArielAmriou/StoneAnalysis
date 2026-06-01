@@ -20,6 +20,20 @@ namespace SfmlUtils {
                     std::clamp(color.b + offset, 0, 255)
                 );
             }
+
+            static sf::Font loadFromFile(std::string file)
+            {
+                sf::Font font;
+                font.loadFromFile(file);
+                return font;
+            }
+
+            static sf::Texture loadTextureFromFile(std::string file)
+            {
+                sf::Texture texture;
+                texture.loadFromFile(file);
+                return texture;
+            }
     };
 }
 
