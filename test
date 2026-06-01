@@ -1,0 +1,20 @@
+RIFF {
+    ID: "RIFF";
+    Size: 19236;
+    Format: "WAVE";
+}
+fmt {
+    ID: "fmt ";
+    Size: 16;
+    Format: 1;
+    Number of channel: 1;
+    Sample rate: 48000;
+    Byte rate: 96000;
+    Block align: 2;
+    Bits per sample: 16;
+}
+data {
+    ID: "data";
+    Size: 19200;
+    Waves: 0, 1509, 3013, 4507, 5985, ..., -1511, -3011, -4508, -5986, -7446;
+}

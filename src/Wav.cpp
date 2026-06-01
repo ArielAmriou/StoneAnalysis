@@ -30,7 +30,6 @@ namespace StoneAnalysis {
         return std::make_unique<DFT>()->analize(_waves._data);
     };
 
-
     void Wav::save(std::string path)
     {
         std::ofstream out(path, std::ios::binary);
