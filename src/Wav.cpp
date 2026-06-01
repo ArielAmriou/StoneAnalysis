@@ -9,12 +9,16 @@
 #include "DFT.hpp"
 #include "Exception.hpp"
 
+#include <filesystem>
+
 namespace StoneAnalysis {
 
     Wav::Wav(std::string path): _file(path, std::ios::binary)
     {
         if (_file.fail())
             throw NoSuchFileException(path);
+        if (!std::filesystem::file_size(path))
+            throw EmptyFile();
         _RIFF = RIFF(_file);
         _fmt = fmtSubChunk(_file);
         _waves = Waves(_file);
@@ -25,7 +29,6 @@ namespace StoneAnalysis {
     {
         return std::make_unique<DFT>()->analize(_waves._data);
     };
-
 
     void Wav::save(std::string path)
     {
