@@ -41,6 +41,36 @@ namespace StoneAnalysis {
         public:
             MsgTooLongException() : StoneAnalysisException("Message too long") {};
     };
+
+    class ParsingError : public StoneAnalysisException {
+        public:
+            ParsingError(std::string scope, std::string msg) :
+                StoneAnalysisException("Parsing Error (" + scope + "): " + msg)
+                {};
+            ParsingError(std::string msg) :
+                StoneAnalysisException("Parsing Error: " + msg)
+                {};
+    };
+
+    class RiffParsingError : public ParsingError {
+        public:
+            RiffParsingError(std::string str) : ParsingError("RIFF chunk", str) {};
+    };
+
+    class FmtParsingError : public ParsingError {
+        public:
+            FmtParsingError(std::string str) : ParsingError("fmt subchunk", str) {};
+    };
+
+    class DataParsingError : public ParsingError {
+        public:
+            DataParsingError(std::string str) : ParsingError("Data subchunk", str) {};
+    };
+
+    class EmptyFile : public ParsingError{
+        public:
+            EmptyFile() : ParsingError("Emtpy file") {};
+    };
 };
 
 #endif

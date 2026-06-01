@@ -5,12 +5,17 @@
 ** Waves
 */
 
+#include <cstring>
+
 #include "Waves.hpp"
+#include "Exception.hpp"
 
 namespace StoneAnalysis {
     Waves::Waves(std::ifstream &file)
     {
         file.read((char *)(&_header), sizeof(_header));
+        if (std::strncmp(_header.subChunkID, "data", 4) != 0)
+            throw DataParsingError("Invalid SubChunk ID");
         std::size_t numSamples = _header.subChunkSize / sizeof(b2);
         for (std::size_t i = 0; i < numSamples; ++i) {
             b2 sample;

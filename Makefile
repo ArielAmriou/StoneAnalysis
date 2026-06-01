@@ -22,6 +22,7 @@ PATH_UNI = 	$(addprefix tests/, 				\
 				tests_parsing.cpp 				\
 				tests_analyze.cpp 				\
 				tests_steganography.cpp 		\
+				tests_wav.cpp 					\
 			)
 
 OBJ = $(SRC:.cpp=.o) $(MAIN:.cpp=.o)
@@ -44,7 +45,7 @@ debug: fclean $(OBJ) $(OBJ)
 	$(CXX) -o $(NAME) $(OBJ)
 
 $(TESTS): LDFLAGS += --coverage -lcriterion
-$(TESTS):
+$(TESTS): uni_clean
 	$(CXX) -o $(TESTS) $(SRC) $(PATH_UNI) \
 		$(LDLIBS) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS)
 	./$(TESTS)

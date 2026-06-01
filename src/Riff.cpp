@@ -6,15 +6,23 @@
 */
 
 #include <fstream>
+#include <cstring>
+#include <iostream>
 
 #include "Riff.hpp"
+#include "Exception.hpp"
 
 namespace StoneAnalysis {
 
     RIFF::RIFF(std::ifstream &file)
     {
         file.read((char *)(&_data), sizeof(_data));
-        SWAP(_data.chunkSize);
+        if (std::strncmp(_data.chunkID, "RIFF", 4) != 0)
+            throw RiffParsingError("Invalid Chunk ID");
+        if (_data.chunkSize <= 36)
+            throw RiffParsingError("Chunk Size too small (" + std::to_string(_data.chunkSize) + ")");
+        if (std::strncmp(_data.format, "WAVE", 4) != 0)
+            throw RiffParsingError("Invalid Chunk Format");
     }
     
     std::ostream& operator<<(std::ostream& os, RIFF& obj)
