@@ -16,6 +16,7 @@ SRC = 	$(addprefix src/, 						\
 			Fmt.cpp								\
 			Waves.cpp							\
 			DFT.cpp								\
+			FFT.cpp								\
     	)
 
 PATH_UNI = 	$(addprefix tests/, 				\
@@ -40,6 +41,12 @@ all:	$(NAME)
 $(NAME): $(OBJ)
 	$(CXX) -o $(NAME) $(OBJ) $(CPPFLAGS)
 
+bonus:
+	$(MAKE) -C bonus/
+
+fclean_bonus:
+	$(MAKE) -C bonus/ fclean
+
 debug: CFLAGS += -g
 debug: fclean $(OBJ) $(OBJ)
 	$(CXX) -o $(NAME) $(OBJ)
@@ -62,4 +69,4 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all debug clean fclean re tests_run uni_clean
+.PHONY: all debug clean fclean re tests_run uni_clean bonus fclean_bonus

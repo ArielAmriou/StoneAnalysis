@@ -15,6 +15,7 @@ SRC = 	$(addprefix ../src/, 					\
 			Fmt.cpp								\
 			Waves.cpp							\
 			DFT.cpp								\
+			FFT.cpp								\
     	)
 
 BONUS_SRC =	$(addprefix src/, 					\

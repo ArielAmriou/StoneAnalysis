@@ -6,7 +6,7 @@
 */
 
 #include "Wav.hpp"
-#include "DFT.hpp"
+#include "FFT.hpp"
 #include "Exception.hpp"
 
 #include <filesystem>
@@ -27,7 +27,7 @@ namespace StoneAnalysis {
 
     std::vector<std::complex<double>> Wav::analize()
     {
-        return std::make_unique<DFT>()->analize(_waves._data);
+        return std::make_unique<FFT>()->analize(_waves._data);
     };
 
     void Wav::save(std::string path)

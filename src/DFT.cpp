@@ -19,8 +19,8 @@ namespace StoneAnalysis {
         for (std::size_t k = 0; k < K; ++k) {
             std::complex<double> correlation(0.0, 0.0);
             for (std::size_t n = 0; n < N; ++n) {
-                double realPart = cos(((2*M_PI)/N) * k * n);
-                double imagPart = sin(((2*M_PI)/N) * k * n);
+                double realPart = cos(((2 * M_PI) / N) * k * n);
+                double imagPart = sin(((2 * M_PI) / N) * k * n);
                 std::complex<double> tmpCor(realPart, -imagPart);
                 correlation += tmpCor * std::complex<double>(waves[n], 0.0);
             }
