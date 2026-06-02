@@ -116,9 +116,9 @@ namespace StoneAnalysis {
         if (!_in)
             throw NotInitializeException();
         auto a = _in->analize();
-        std::size_t usable = a.size() / 2;
+        std::size_t usable = (a.size() / 2.0) + 1.0;
         std::map<double, std::size_t> dists;
-        for (std::size_t i = 0; i < usable; i++) {
+        for (std::size_t i = 1; i < usable; i++) {
             auto dist = std::sqrt(std::pow(a[i].imag(), 2.0) + std::pow(a[i].real(), 2.0));
             dists.insert({dist, i});
         }
