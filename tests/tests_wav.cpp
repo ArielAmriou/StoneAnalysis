@@ -89,7 +89,7 @@ Test(Parsing, data_no_chunk_id, .init = redirect_all_std)
 
 Test(Parsing, complete_print, .init = redirect_all_std)
 {
-    StoneAnalysis::Wav w("sounds/untitled.wav");
+    StoneAnalysis::Wav w("tests/testSounds/untitled.wav");
     std::cout << w << std::flush;
     cr_assert_stdout_eq_str(
         "RIFF {\n"
