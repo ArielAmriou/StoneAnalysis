@@ -85,3 +85,9 @@ do
 done
 
 echo -e "\e[0;36mTotal: $NBTEST\e[0;0m || \e[0;32mSUCCESS: $NBSUCCESS\e[0;0m || \e[0;31mFAILURE: $NBFAILURE\e[0;0m"
+
+if [ $NBFAILURE = 0 ]; then
+    exit 0
+else
+    exit 1
+fi
