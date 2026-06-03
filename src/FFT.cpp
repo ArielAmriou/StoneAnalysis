@@ -30,17 +30,6 @@ namespace StoneAnalysis {
             oddPart.emplace_back(waves[(k * 2) + 1]);
         }
 
-        // std::cout << "even [";
-        // for (auto even: evenPart)
-        //     std::cout << even.real() << ", ";
-        // std::cout << "]" << std::endl;
-
-        // std::cout << "odd [";
-        // for (auto even: oddPart)
-        //     std::cout << even.real() << ", ";
-        // std::cout << "]" << std::endl;
-
-
         std::vector<std::complex<double>> evenComputed
             = getAmplitudes(evenPart);
         std::vector<std::complex<double>> oddComputed
@@ -59,17 +48,6 @@ namespace StoneAnalysis {
 
     std::vector<std::complex<double>> FFT::analize(std::vector<b2> waves)
     {
-        // std::vector<b2> test;
-        // test.emplace_back(0.46 * 256);
-        // test.emplace_back(-0.16 * 256);
-        // test.emplace_back(-0.30 * 256);
-        // test.emplace_back(0.0 * 256);
-        // test.emplace_back(0.72 * 256);
-        // test.emplace_back(-0.20 * 256);
-        // test.emplace_back(-0.09 * 256);
-        // test.emplace_back(-0.43 * 256);
-        // waves = test;
-        // test part
         std::vector<std::complex<double>> complexWaves;
         std::size_t N = waves.size();
         std::size_t next = std::__bit_ceil(N);

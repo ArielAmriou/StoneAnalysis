@@ -35,12 +35,12 @@ Test(Analyse, Basic, .init = redirect_all_std)
 {
     std::queue<std::string> args(std::deque<std::string>{
     "-a",
-    "tests/testSounds/basic.wav", "1"
+    "tests/testSounds/complex.wav", "1"
     });
     cr_assert_str_eq(testMain(args), "No Error");
     fflush(stdout);
     cr_assert_stdout_eq_str("Top 1 frequencies:\n"
-                            "440.0 Hz\n");
+                            "710.0 Hz\n");
 }
 
 Test(Analyse, Complex, .init = redirect_all_std)
@@ -52,7 +52,7 @@ Test(Analyse, Complex, .init = redirect_all_std)
     cr_assert_str_eq(testMain(args), "No Error");
     fflush(stdout);
     cr_assert_stdout_eq_str("Top 3 frequencies:\n"
-                            "500.0 Hz\n"
-                            "400.0 Hz\n"
-                            "300.0 Hz\n");
+                            "710.0 Hz\n"
+                            "440.0 Hz\n"
+                            "220.0 Hz\n");
 }
