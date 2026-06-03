@@ -50,7 +50,6 @@ testAnalize() {
 }
 
 testCrypt() {
-    rm -rf tmp.wav > /dev/urandom
     SOUND="tests/testSounds/$1.wav"
     COMMAND1="./stone_analysis -c $SOUND tmp.wav $2"
     COMMAND2="./stone_analysis -d tmp.wav"
@@ -70,6 +69,7 @@ testCrypt() {
         echo -e "\e[0;33mExpected:\n${2^^}\e[0;0m"
         echo -e "\e[0;33mGot:\n$OUTPUT\e[0;0m"
     fi
+    rm -rf tmp.wav > /dev/urandom
 }
 
 switch "Analize"
