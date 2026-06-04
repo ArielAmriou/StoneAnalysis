@@ -114,3 +114,22 @@ Test(Parsing, complete_print, .init = redirect_all_std)
         "}");
 }
 
+Test(Parsing, riff_to_much_data, .init = redirect_all_std)
+{
+	cr_assert_any_throw(StoneAnalysis::Wav("testSounds/errors/riff_to_much_data.wav"));
+}
+
+Test(Parsing, riff_not_much_data, .init = redirect_all_std)
+{
+	cr_assert_any_throw(StoneAnalysis::Wav("testSounds/errors/riff_not_much_data.wav"));
+}
+
+Test(Parsing, data_not_much_data, .init = redirect_all_std)
+{
+	cr_assert_any_throw(StoneAnalysis::Wav("testSounds/errors/data_not_much_data.wav"));
+}
+
+Test(Parsing, data_too_much_data, .init = redirect_all_std)
+{
+	cr_assert_any_throw(StoneAnalysis::Wav("testSounds/errors/data_too_much_data.wav"));
+}

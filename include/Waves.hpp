@@ -10,6 +10,7 @@
 
 #include <fstream>
 #include <vector>
+#include <filesystem>
 
 #include "Utils.hpp"
 
@@ -23,7 +24,7 @@ namespace StoneAnalysis {
     class Waves {
         public:
             Waves() = default;
-            Waves(std::ifstream &file);
+            Waves(std::ifstream &file, uintmax_t size);
 
             wavesData _header;
             std::vector<b2> _data;

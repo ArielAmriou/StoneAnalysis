@@ -9,6 +9,7 @@
 #define RIFF_HPP_
 
 #include <fstream>
+#include <filesystem>
 
 #include "Utils.hpp"
 
@@ -23,7 +24,7 @@ namespace StoneAnalysis {
     class RIFF {
         public:
             RIFF() = default;
-            RIFF(std::ifstream &file);
+            RIFF(std::ifstream &file, uintmax_t size);
 
             RIFF_data _data;
     };

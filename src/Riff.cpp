@@ -14,13 +14,13 @@
 
 namespace StoneAnalysis {
 
-    RIFF::RIFF(std::ifstream &file)
+    RIFF::RIFF(std::ifstream &file, uintmax_t size)
     {
         file.read((char *)(&_data), sizeof(_data));
         if (std::strncmp(_data.chunkID, "RIFF", 4) != 0)
             throw RiffParsingError("Invalid Chunk ID");
-        if (_data.chunkSize <= 36)
-            throw RiffParsingError("Chunk Size too small (" + std::to_string(_data.chunkSize) + ")");
+        if (static_cast<uintmax_t>(_data.chunkSize + 8) != size)
+            throw RiffParsingError("Invalid Chunk Size (" + std::to_string(_data.chunkSize) + ")");
         if (std::strncmp(_data.format, "WAVE", 4) != 0)
             throw RiffParsingError("Invalid Chunk Format");
     }

@@ -18,11 +18,12 @@ namespace StoneAnalysis {
     {
         if (_file.fail())
             throw NoSuchFileException(path);
-        if (!std::filesystem::file_size(path))
+        auto size = std::filesystem::file_size(path);
+        if (size == 0)
             throw EmptyFile();
-        _RIFF = RIFF(_file);
+        _RIFF = RIFF(_file, size);
         _fmt = fmtSubChunk(_file);
-        _waves = Waves(_file);
+        _waves = Waves(_file, size);
         _file.close();
     };
 
