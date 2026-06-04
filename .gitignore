@@ -3,3 +3,4 @@ sounds
 stone_analysis
 tests_run*
 tests/testSounds/crypt.wav
+.vscode
