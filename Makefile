@@ -57,6 +57,9 @@ $(TESTS): uni_clean
 		$(LDLIBS) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS)
 	./$(TESTS)
 
+functionnal_tests:
+	./tests/functionnalTests.sh
+
 uni_clean:
 	$(RM) $(TESTS)*
 

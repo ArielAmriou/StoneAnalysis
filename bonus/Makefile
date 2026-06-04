@@ -13,7 +13,6 @@ SRC = 	$(addprefix ../src/, 					\
 			Wav.cpp								\
 			Riff.cpp							\
 			Fmt.cpp								\
-			Waves.cpp							\
 			DFT.cpp								\
 			FFT.cpp								\
     	)
@@ -24,6 +23,7 @@ BONUS_SRC =	$(addprefix src/, 					\
 			FrequencySpectrum.cpp				\
 			ComplexSpectrum.cpp					\
 			Loading.cpp 						\
+			Waves.cpp							\
 			AButton.cpp 						\
     	)
 

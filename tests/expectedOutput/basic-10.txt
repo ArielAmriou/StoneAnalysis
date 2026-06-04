@@ -1,0 +1,11 @@
+Top 10 frequencies:
+439.5 Hz
+442.4 Hz
+436.5 Hz
+433.6 Hz
+448.2 Hz
+427.7 Hz
+451.2 Hz
+457.0 Hz
+421.9 Hz
+430.7 Hz

@@ -58,7 +58,7 @@ jobs:
           fetch-depth: '0'
       - name: Make Test
         timeout-minutes: 5
-        run: make tests_run
+        run: make tests_run && make functionnal_tests
   
   push_to_mirror:
     needs: run_tests

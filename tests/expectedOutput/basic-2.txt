@@ -1,0 +1,3 @@
+Top 2 frequencies:
+439.5 Hz
+442.4 Hz

@@ -1,0 +1,4 @@
+Top 3 frequencies:
+710.0 Hz
+440.0 Hz
+220.0 Hz
