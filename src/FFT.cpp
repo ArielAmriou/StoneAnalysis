@@ -31,17 +31,18 @@ namespace StoneAnalysis {
         }
 
         std::vector<std::complex<double>> evenComputed
-            = getAmplitudes(evenPart);
+            = getAmplitudes(std::move(evenPart));
         std::vector<std::complex<double>> oddComputed
-            = getAmplitudes(oddPart);
+            = getAmplitudes(std::move(oddPart));
 
-        std::vector<std::complex<double>> amplitudes(N, 0);
+        std::complex<double> base(cos((2 * M_PI) / N), -sin((2 * M_PI) / N));
+        std::complex<double> w(1.0, 0.0);
+        std::vector<std::complex<double>> amplitudes(N);
         for (std::size_t k = 0; k < M; ++k) {
-            double realPart = cos(((2 * M_PI) / N) * k);
-            double imagPart = sin(((2 * M_PI) / N) * k);
-            std::complex<double> C(realPart, -imagPart);
-            amplitudes[k] = evenComputed[k] + (C * oddComputed[k]);
-            amplitudes[k + M] = evenComputed[k] - (C * oddComputed[k]);
+            std::complex<double> C = w * oddComputed[k];
+            amplitudes[k] = evenComputed[k] + C;
+            amplitudes[k + M] = evenComputed[k] - C;
+            w *= base;
         }
         return amplitudes;
     }

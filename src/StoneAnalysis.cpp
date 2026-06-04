@@ -117,19 +117,19 @@ namespace StoneAnalysis {
             throw NotInitializeException();
         auto a = _in->analize();
         std::size_t usable = (a.size() / 2.0) + 1.0;
-        std::map<double, std::size_t> dists;
+        std::vector<std::pair<double, std::size_t>> dists;
+        dists.reserve(usable - 1);
         for (std::size_t i = 1; i < usable; i++) {
-            auto dist = std::sqrt(std::pow(a[i].imag(), 2.0) + std::pow(a[i].real(), 2.0));
-            dists.insert({dist, i});
+            double dist = std::abs(a[i]);
+            dists.emplace_back(dist, i);
         }
+        std::size_t take = std::min(_n, dists.size());
+        std::partial_sort(dists.begin(), dists.begin() + take, dists.end(),
+            [](const auto &a, const auto &b) { return a.first > b.first; });
         std::cout << "Top " << _n << " frequencies:\n" << std::fixed << std::setprecision(1);
-        auto iter = --dists.end();
-        for (std::size_t i = 0; i < _n; i++) {
-            auto value = iter->second * RATE / a.size();
+        for (std::size_t i = 0; i < take; i++) {
+            double value = dists[i].second * RATE / a.size();
             std::cout << value << " Hz\n";
-            if (iter == dists.begin())
-                break;
-            iter--;
         }
     }
 

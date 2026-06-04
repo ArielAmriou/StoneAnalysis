@@ -61,6 +61,7 @@ functionnal_tests:
 	./tests/functionnalTests.sh
 
 uni_clean:
+	$(RM) tests/testSounds/crypt.wav
 	$(RM) $(TESTS)*
 
 clean: uni_clean
