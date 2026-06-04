@@ -44,22 +44,19 @@ Test(Steganography, CryptFail, .init = redirect_all_std)
     cr_assert_str_eq(testMain(args), "Stone Analysis Error: Message too long");
 }
 
-Test(Steganography, Crypt, .init = redirect_all_std)
+Test(Steganography, CryptandDecrypt, .init = redirect_all_std)
 {
     std::queue<std::string> args(std::deque<std::string>{
     "-c",
     "tests/testSounds/basic.wav", "tests/testSounds/crypt.wav", "Hello World! 123"
     });
     cr_assert_str_eq(testMain(args), "No Error");
-}
 
-Test(Steganography, DeCrypt, .init = redirect_all_std)
-{
-    std::queue<std::string> args(std::deque<std::string>{
+    std::queue<std::string> args2(std::deque<std::string>{
     "-d",
     "tests/testSounds/crypt.wav"
     });
-    cr_assert_str_eq(testMain(args), "No Error");
+    cr_assert_str_eq(testMain(args2), "No Error");
     fflush(stdout);
     cr_assert_stdout_eq_str("HELLO WORLD! 123\n");
 }
