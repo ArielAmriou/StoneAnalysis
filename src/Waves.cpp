@@ -14,12 +14,17 @@ namespace StoneAnalysis {
     Waves::Waves(std::ifstream &file)
     {
         file.read((char *)(&_header), sizeof(_header));
+        if (file.fail())
+            throw DataParsingError("Unexpected end of file");
         if (std::strncmp(_header.subChunkID, "data", 4) != 0)
             throw DataParsingError("Invalid SubChunk ID");
         std::size_t numSamples = _header.subChunkSize / sizeof(b2);
+        _data.reserve(numSamples);
         for (std::size_t i = 0; i < numSamples; ++i) {
             b2 sample;
             file.read((char *)(&sample), sizeof(sample));
+            if (file.fail())
+                throw DataParsingError("File shorter than header subChunkSize");
             _data.push_back(sample);
         }
     }
