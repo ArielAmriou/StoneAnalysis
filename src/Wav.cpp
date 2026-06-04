@@ -10,6 +10,7 @@
 #include "Exception.hpp"
 
 #include <filesystem>
+#include <iostream>
 
 namespace StoneAnalysis {
 
@@ -35,7 +36,6 @@ namespace StoneAnalysis {
         std::ofstream out(path, std::ios::binary);
         if (out.fail())
             throw NoSuchFileException(path);
-        SWAP(_RIFF._data.chunkSize);
         out.write((char *)(&_RIFF._data), sizeof(_RIFF._data));
         out.write((char *)(&_fmt._data), sizeof(_fmt._data));
         out.write((char *)(&_waves._header), sizeof(_waves._header));
