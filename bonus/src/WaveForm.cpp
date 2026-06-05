@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+#include <unordered_map>
 #include "WaveForm.hpp"
 #include "SfmlUtils.hpp"
 
@@ -41,8 +42,46 @@ namespace StoneAnalysis{
 
     void WaveForm::event(sf::Event &event, sf::Vector2f mousePos)
     {
+        std::unordered_map<sf::Keyboard::Key, float> offsets = {
+            {sf::Keyboard::Num0, 0.0},
+            {sf::Keyboard::Num1, 0.1},
+            {sf::Keyboard::Num2, 0.2},
+            {sf::Keyboard::Num3, 0.3},
+            {sf::Keyboard::Apostrophe, 0.4},
+            {sf::Keyboard::Num5, 0.5},
+            {sf::Keyboard::Hyphen, 0.6},
+            {sf::Keyboard::Num7, 0.7},
+            {sf::Keyboard::Num8, 0.8},
+            {sf::Keyboard::Num9, 0.9},
+        };
         _play.click(mousePos, event);
         _stop.click(mousePos, event);
+        if (event.type == sf::Event::KeyPressed) {
+            auto iter = offsets.find(event.key.code);
+            if (iter != offsets.end()) {
+                sf::Time offset = iter->second * _music.getDuration();
+                _music.setPlayingOffset(iter->second * _music.getDuration());
+                if (_music.getStatus() == sf::Sound::Status::Stopped) {
+                    _music.play();
+                    _music.setPlayingOffset(offset);
+                    _music.pause();
+                    _start = true;
+                } else {
+                    _music.setPlayingOffset(offset);
+                }
+            }
+        }
+        if (event.type == sf::Event::KeyPressed
+            && event.key.code == sf::Keyboard::Space) {
+            if (_play.getState() == Play)
+                _play.setState(Pause);
+            else
+                _play.setState(Play);
+        }
+        if (event.type == sf::Event::KeyPressed
+            && event.key.code == sf::Keyboard::Delete) {
+            _stop.setState(None);
+        }
         if (_stop.getState() == None) {
             _stop.reset();
             _music.stop();

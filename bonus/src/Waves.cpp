@@ -12,7 +12,7 @@
 #include "Exception.hpp"
 
 namespace StoneAnalysis {
-    Waves::Waves(std::ifstream &file)
+    Waves::Waves(std::ifstream &file, uintmax_t size)
     {
         desc subChunkID;
         b4 subChunkSize;

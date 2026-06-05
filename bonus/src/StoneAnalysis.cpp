@@ -6,6 +6,7 @@
 */
 
 #include <gtk/gtk.h>
+#include <unistd.h>
 #include <sstream>
 #include <filesystem>
 #include <iomanip>
@@ -32,8 +33,6 @@ namespace StoneAnalysis {
         _toolBar.setSize({WINDOW_SIZE_X, TOOLBAR_HEIGHT});
         _toolBar.setFillColor(LIGHTGREY);
         _text.setFont(_font);
-        // _file = "../tests/testSounds/basic.wav";
-        // load();
     }
 
     StoneAnalysis::~StoneAnalysis()
@@ -126,6 +125,7 @@ namespace StoneAnalysis {
 
     void StoneAnalysis::openFileDialog()
     {
+        chdir("../");
         GtkWidget *dialog = gtk_file_chooser_dialog_new(
             "Select WAV file", NULL,
             GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -150,6 +150,7 @@ namespace StoneAnalysis {
         gtk_widget_destroy(dialog);
         if (!result.empty())
             _file = result;
+        chdir("bonus/");
     }
 
     void StoneAnalysis::load()
