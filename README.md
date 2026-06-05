@@ -40,7 +40,8 @@ sudo apt-get install libsfml-dev
 
 ## Documentation
 
-If you'd like to contribute to this project, please look after the **docs/developper_doc.md**
+[Analize documentation](docs/analize.md)\
+[Steganography documentation](docs/steganography.md)
 
 ## License
 
